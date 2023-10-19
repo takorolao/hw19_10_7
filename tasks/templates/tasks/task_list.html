@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+</head>
+
+<body>
+
+
+    <nav>
+        <a href="{% url 'task_list' %}">Главная</a>
+        <a href="{% url 'create_ice_cream' %}">Создать мороженку</a>
+    </nav>
+
+   
+    <div class="task-list">
+        {% for task in tasks %}
+            <div class="task">
+                <h2>{{ task.title }}</h2>
+                <p>{{ task.description }}</p>
+            </div>
+        {% empty %}
+            <p>Задачи отсутствуют.</p>
+        {% endfor %}
+    </div>
+
+    
+    <div class="pagination">
+        {% if tasks.has_previous %}
+            <a href="?page=1">&laquo; первая</a>
+            <a href="?page={{ tasks.previous_page_number }}">предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ tasks.number }} из {{ tasks.paginator.num_pages }}.
+        </span>
+
+        {% if tasks.has_next %}
+            <a href="?page={{ tasks.next_page_number }}">следующая</a>
+            <a href="?page={{ tasks.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>
